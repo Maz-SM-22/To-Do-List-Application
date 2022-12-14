@@ -1,0 +1,25 @@
+{
+  "name": "to-do-list-application",
+  "version": "1.0.0",
+  "description": "Node.js / express app for to-do list",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maz-SM-22/To-Do-List-Application.git"
+  },
+  "author": "Maz-SM-22",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maz-SM-22/To-Do-List-Application/issues"
+  },
+  "homepage": "https://github.com/Maz-SM-22/To-Do-List-Application#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "serve-static": "^1.15.0"
+  }
+}

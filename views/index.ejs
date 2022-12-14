@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+</head>
+
+<body>
+    <h1>Hello, you are in the index file.</h1>
+    <h2>
+        <%=name %> you created me
+    </h2>
+    <h3>
+        <% for (let i=0; i < length; i++) { %>
+            <p>I will repeat this 5 times
+            <p>
+                <% } %>
+    </h3>
+    <div class="container">
+        <h2>A simple To-Do list app</h2>
+        <form action="http://localhost:3000/tasks" method="post">
+            <input type="text" name="newtask" placeholder="Add a new task..." />
+        </form>
+    </div>
+</body>
+
+</html>
