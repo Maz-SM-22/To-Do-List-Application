@@ -1,0 +1,23 @@
+[
+  {
+    "id": "456cfabd-9f38-4447-9db1-7a4ec48e203e",
+    "title": "Relaxing",
+    "description": "Go for a treat day at the spa - you deserve it!",
+    "completed": false,
+    "dueDate": "2022-12-28"
+  },
+  {
+    "id": "0adf455f-bae7-4218-8a2d-c0c2bcc27040",
+    "title": "Origami",
+    "description": "Fold some paper into fun shapes",
+    "completed": false,
+    "dueDate": "2022-12-28"
+  },
+  {
+    "id": "d8989243-8dd4-4b91-b5f8-266695a584e1",
+    "title": "Wednesday Yoga",
+    "description": "Do some stretches which will increase your flexibility",
+    "completed": false,
+    "dueDate": "2022-12-29"
+  }
+]

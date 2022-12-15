@@ -1,0 +1,1 @@
+// https://stackoverflow.com/questions/34926876/override-method-get-to-delete-in-nodejs-using-anchor-tag

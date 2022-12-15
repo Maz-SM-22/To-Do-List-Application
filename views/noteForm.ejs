@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css" />
+</head>
+
+<body>
+    <div class="form-container">
+        <% if (task) { %>
+            <h4>Edit Task</h4>
+            <% let id=task.id %>
+                <% let address=`/tasks/${id}?_method=PUT`; %>
+                    <form action=<%=address %>>
+
+                        <div class="task-form-item">
+                            <label for="title">Title:</label>
+                        </div>
+                        <div class="task-form-item">
+
+                            <input type="text" name="title" value=<%=task.title %> />
+
+
+                        </div>
+                        <div class="task-form-item">
+                            <label for="description">Description:</label>
+                        </div>
+                        <div class="task-form-item">
+
+                            <textarea name="description" id="description"><%=task.description %></textarea>
+
+
+                        </div>
+                        <div class="task-form-item">
+                            <label for="dueDate">When is your task due:</label>
+                        </div>
+                        <div class="task-form-item">
+
+                            <input type="date" name="dueDate" value=<%=task.dueDate %> />
+
+                        </div>
+                        <button type="submit">Add Task</button>
+                    </form>
+                    <% } else { %>
+                        <h2>My To-Do list</h2>
+                        <h4>Create Task</h4>
+                        <form action="/tasks" method="post">
+
+                            <div class="task-form-item">
+                                <label for="title">Title:</label>
+                            </div>
+                            <div class="task-form-item">
+
+                                <input type="text" name="title" placeholder="Name your new task..." />
+
+                            </div>
+                            <div class="task-form-item">
+                                <label for="description">Description:</label>
+                            </div>
+                            <div class="task-form-item">
+                                <textarea name="description" id="description"
+                                    placeholder="Add a description for your task..."></textarea>
+
+
+                            </div>
+                            <div class="task-form-item">
+                                <label for="dueDate">When is your task due:</label>
+                            </div>
+                            <div class="task-form-item">
+
+                                <input type="date" name="dueDate" />
+
+                            </div>
+                            <button type="submit">Add Task</button>
+                        </form>
+                        <% } %>
+    </div> -->
+</body>
+
+</html>
