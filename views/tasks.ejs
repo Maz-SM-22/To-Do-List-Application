@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css" />
 </head>
 
@@ -14,12 +17,17 @@
         <h2>My To-Do list</h2>
         <div class="tasks-container">
             <% for (let task of tasks) { %>
-                <p>
-                    <%=task.title %>
-                </p>
+                <div class="task">
+                    <p class="task-title">
+                        <%=task.title %>
+                    </p>
+                    <p class="task-description">
+                        <%=task.description %>
+                    </p>
+                </div>
                 <% } %>
         </div>
-        <a href="/task/create">Add New Task</a>
+        <a href="/task/create" class="button">Add New Task</a>
     </div>
 </body>
 

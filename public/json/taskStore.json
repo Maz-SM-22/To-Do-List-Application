@@ -19,5 +19,12 @@
     "description": "Do some stretches which will increase your flexibility",
     "completed": false,
     "dueDate": "2022-12-29"
+  },
+  {
+    "id": "58e3854a-3a0b-40ec-ba93-5730b722db9b",
+    "title": "Wash",
+    "description": "Get a shower",
+    "completed": false,
+    "dueDate": "2023-01-11"
   }
 ]

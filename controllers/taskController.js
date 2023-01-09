@@ -3,6 +3,7 @@ const path = require('path');
 const _ = require('lodash');
 const { v4: uuidv4 } = require('uuid');
 const { indexOf } = require('lodash');
+const Task = require('../models/Task');
 
 const getTasks = (req, res) => {
     const tasks = JSON.parse(fs.readFileSync('./public/json/taskStore.json'), 'utf-8');
@@ -18,8 +19,6 @@ const createTask = (req, res) => {
         completed: false,
         dueDate: req.body.dueDate
     }
-    console.log(tasks)
-    console.log(newTask);
     tasks.push(newTask);
     fs.writeFile('./public/json/taskStore.json', JSON.stringify(tasks, null, 2), (err, data) => {
         if (err) console.log(err)
