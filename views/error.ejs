@@ -14,8 +14,14 @@
 
 <body>
     <h1>Sorry!</h1>
-    <h2>We cannot find the page you were looking for</h2>
-    <a href="#" id="return-btn">Return to home page</a>
+    <% if (error) { %>
+        <h2>
+            <%= error %>
+        </h2>
+        <% } else { %>
+            <h2>We cannot find the page you were looking for</h2>
+            <% } %>
+                <a href="/" id="return-btn" class="button">Return to home page</a>
 </body>
 
 </html>

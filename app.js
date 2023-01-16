@@ -1,32 +1,47 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
-const bodyParser = require('body-parser');
-const staticDirectory = require('serve-static');
+const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const methodOverride = require('method-override');
+const session = require('express-session');
 const ejs = require('ejs');
-const { v4: uuid } = require('uuid');
+const staticDirectory = require('serve-static');
+require('dotenv').config({ path: './config/config.env' });
+const dbConnect = require('./config/db');
 const userRouter = require('./routes/userRoutes');
 const taskRouter = require('./routes/taskRoutes');
 const formRouter = require('./routes/formRoutes');
+const errorHandler = require('./middleware/errorHandler');
 
-const HOSTNAME = 'localhost';
-const PORT = 3000;
-const DB_SERVER = 'mongodb://127.0.0.1:27017';
-const database = 'application';
-
-mongoose.set('strictQuery', true);
-mongoose.connect(`${DB_SERVER}/${database}`)
-    .then(() => console.log('Database connected!'))
-    .catch((err) => console.error(err));
+const HOSTNAME = process.env.HOSTNAME || 'localhost';
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());
 app.use(staticDirectory(__dirname + '/public'));
+app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
+
+app.use(session({
+    secret: 'shhhhhh',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 },
+    store: MongoStore.create({
+        mongoUrl: `${process.env.DB_SERVER}/${process.env.database}`,
+        collection: 'sessions'
+    })
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/tasks', taskRouter);
 app.use('/user', userRouter);
 app.use('/', formRouter);
+
+app.use(errorHandler);
+
+dbConnect();
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -40,5 +55,5 @@ app.get('/view/error', (req, res) => {
 
 app.listen({ path: HOSTNAME, port: PORT }, (error) => {
     if (error) return console.log(error);
-    console.log('Server is running on port 3000...');
+    console.log(`Server is running on port ${PORT}...`);
 }); 

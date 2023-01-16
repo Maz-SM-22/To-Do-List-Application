@@ -1,6 +1,12 @@
-const renderTaskForm = (req, res, ...args) => {
-    let task = args.task || null;
-    res.render('noteForm', { task: task });
+const Task = require('../models/Task');
+
+const renderTaskForm = (req, res) => {
+    if (req.params.id) {
+        Task.findById(req.params.id).then(task => {
+            res.render('taskForm', { task: task });
+        })
+    }
+    else res.render('taskForm', { task: null });
 }
 
 const renderLoginForm = (req, res) => {

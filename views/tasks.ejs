@@ -13,22 +13,77 @@
 </head>
 
 <body>
+    <nav>
+        <ul>
+            <li>Hi, <%=user.username %>
+            </li>
+            <li><a href="/user/logout" class="button">Logout</a></li>
+        </ul>
+    </nav>
     <div class="container">
-        <h2>My To-Do list</h2>
+        <h2>To-Do List</h2>
+        <a href="/task/create" class="button">Add New Task</a>
+        <h2>Pending Tasks</h2>
         <div class="tasks-container">
-            <% for (let task of tasks) { %>
-                <div class="task">
-                    <p class="task-title">
-                        <%=task.title %>
-                    </p>
-                    <p class="task-description">
-                        <%=task.description %>
-                    </p>
+            <% for (let task of tasks.filter(task=> task.completed === false)) { %>
+                <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
+                        <p class="task-title">
+                            <%=task.title %>
+                        </p>
+                        <p class="task-description">
+                            <%=task.description %>
+                        </p>
+                        <p class="task-due-date">
+                            <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
+                        </p>
+                        <button id="status" class="small">Complete</button>
+                        <button id="edit" class="small">Edit</button>
+                        <button id="delete" class="small">Delete</button>
                 </div>
                 <% } %>
         </div>
-        <a href="/task/create" class="button">Add New Task</a>
+        <h2>Completed Tasks</h2>
+        <div class="tasks-container">
+            <% for (let task of tasks.filter(task=> task.completed === true)) { %>
+                <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
+                        <p class="task-title">
+                            <%=task.title %>
+                        </p>
+                        <p class="task-description">
+                            <%=task.description %>
+                        </p>
+                        <p class="task-due-date">
+                            <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
+                        </p>
+                        <button id="status" class="small">Pending</button>
+                        <button id="edit" class="small">Edit</button>
+                        <button id="delete" class="small">Delete</button>
+                </div>
+                <% } %>
+        </div>
     </div>
+    <script>
+        const deleteButtons = document.querySelectorAll(' #delete'); editButtons = document.querySelectorAll('#edit');
+        for (let button of editButtons) {
+            button.addEventListener('click', (event) => {
+                let id = event.target.parentNode.attributes['data-id'].value.replace('"', '');
+                fetch(`/task/edit/${id}`)
+                    .then(() => console.log(`Editing task id no ${id}`));
+            })
+        }
+        const statusButtons = document.querySelectorAll('#status');
+        for (let button of statusButtons) {
+            button.addEventListener('click', (event) => {
+                let id = event.target.parentNode.attributes['data-id'].value.replace('"', '');
+                console.log(id);
+                fetch(`/tasks/done/${id}`)
+                    .then(() => {
+                        console.log(`Task id no ${id} status updated`)
+                        window.location.reload();
+                    });
+            })
+        }
+    </script>
 </body>
 
 </html>

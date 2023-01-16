@@ -13,7 +13,8 @@
 </head>
 
 <body>
-    <div class="form-container">
+    <h2>To-Do List</h2>
+    <div class="task-form-container">
         <% if (task) { %>
             <h4>Edit Task</h4>
             <% let id=task.id %>
@@ -46,10 +47,9 @@
                             <input type="date" name="dueDate" value=<%=task.dueDate %> />
 
                         </div>
-                        <button type="submit">Add Task</button>
+                        <button type="submit">Update Task</button>
                     </form>
                     <% } else { %>
-                        <h2>My To-Do list</h2>
                         <h4>Create Task</h4>
                         <form action="/tasks" method="post">
 
@@ -81,7 +81,7 @@
                             <button type="submit">Add Task</button>
                         </form>
                         <% } %>
-    </div> -->
+    </div>
 </body>
 
 </html>

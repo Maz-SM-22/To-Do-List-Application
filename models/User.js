@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         match: [/^\S+@\S+\.\S+$/, 'Not a valid email format.']
     },
-    password: {
+    hash: {
         type: String,
         required: [true]
     },
