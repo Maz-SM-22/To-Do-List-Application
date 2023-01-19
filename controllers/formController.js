@@ -1,20 +1,38 @@
 const Task = require('../models/Task');
+const { GeneralError, BadRequest, NotFoundError } = require('../utils/error');
 
-const renderTaskForm = (req, res) => {
-    if (req.params.id) {
-        Task.findById(req.params.id).then(task => {
-            res.render('taskForm', { task: task });
-        })
+const renderTaskForm = async (req, res, next) => {
+    try {
+        const taskId = req.params.id || null;
+        if (taskId) {
+            const task = await Task.findById(taskId);
+            if (!task) {
+                throw new NotFoundError(`No task found with id ${taskId}`);
+            } else {
+                res.render('taskForm', { task: task });
+            }
+        } else {
+            res.render('taskForm', { task: null });
+        }
+    } catch (error) {
+        next(error);
     }
-    else res.render('taskForm', { task: null });
 }
 
-const renderLoginForm = (req, res) => {
-    res.render('loginForm');
+const renderLoginForm = (req, res, next) => {
+    try {
+        res.render('loginForm');
+    } catch (error) {
+        next(error);
+    }
 }
 
-const renderRegisterForm = (req, res) => {
-    res.render('registerForm');
+const renderRegisterForm = (req, res, next) => {
+    try {
+        res.render('registerForm');
+    } catch (error) {
+        next(error);
+    }
 }
 
 module.exports = { renderTaskForm, renderLoginForm, renderRegisterForm };

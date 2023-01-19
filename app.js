@@ -3,6 +3,7 @@ const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const flash = require('connect-flash');
 const ejs = require('ejs');
 const staticDirectory = require('serve-static');
 require('dotenv').config({ path: './config/config.env' });
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(staticDirectory(__dirname + '/public'));
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
+app.use(flash());
 
 app.use(session({
     secret: 'shhhhhh',
@@ -34,6 +36,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+const passportConfig = require('./config/passport')(passport);
 
 app.use('/tasks', taskRouter);
 app.use('/user', userRouter);
@@ -44,7 +47,8 @@ app.use(errorHandler);
 dbConnect();
 
 app.get('/', (req, res) => {
-    res.render('home');
+    req.flash('info', 'Welcome!')
+    res.render('home', { message: req.flash('info') });
 })
 
 app.get('/view/error', (req, res) => {

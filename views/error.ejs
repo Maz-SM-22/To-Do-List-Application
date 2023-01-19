@@ -13,15 +13,15 @@
 </head>
 
 <body>
-    <h1>Sorry!</h1>
-    <% if (error) { %>
-        <h2>
-            <%= error %>
-        </h2>
-        <% } else { %>
-            <h2>We cannot find the page you were looking for</h2>
-            <% } %>
-                <a href="/" id="return-btn" class="button">Return to home page</a>
+    <h1>Uhoh!</h1>
+    <p>
+        <%=message %>
+    </p>
+    <p>Looks like there was an error handling your request</p>
+    <h2>
+        Error: <%= error.message %>
+    </h2>
+    <a href="/" id="return-btn" class="button">Return to home page</a>
 </body>
 
 </html>

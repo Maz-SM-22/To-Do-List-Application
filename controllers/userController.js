@@ -1,10 +1,7 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const initializePassport = require('../config/passport');
 const User = require('../models/User');
 const { GeneralError, BadRequest, NotFoundError } = require('../utils/error');
-
-initializePassport(passport);
 
 const registerUser = async (req, res, next) => {
     try {
@@ -14,15 +11,16 @@ const registerUser = async (req, res, next) => {
         } else {
             const user = await User.findOne({ email: req.body.email });
             if (user) {
-                res.render('error', { error: `Email ${req.body.email} is already registered` });
+                throw new BadRequest(`Email ${req.body.email} is already registered`);
             } else {
                 const hashedPassword = await bcrypt.hash(req.body.password, 10);
-                await User.create({
-                    username: username,
-                    email: email,
-                    hash: hashedPassword
-                });
-                res.redirect('/login');
+                User.create({ username: username, email: email, hash: hashedPassword })
+                    .then(user => {
+                        req.login(user, (err) => {
+                            if (err) return next(err);
+                            res.redirect('/tasks');
+                        })
+                    }).catch(error => next(error));
             }
         }
     }
@@ -32,23 +30,31 @@ const registerUser = async (req, res, next) => {
 }
 
 const loginUser = async (req, res, next) => {
-    // TODO: Add some kid of notification for failed login
-    passport.authenticate('local', {
-        successRedirect: '/tasks',
-        failureRedirect: '/'
-    })(req, res, next);
+    try {
+        passport.authenticate('local', {
+            successRedirect: '/tasks',
+            failureRedirect: '/',
+            failureFlash: true
+        })(req, res, next);
+    } catch (error) {
+        next(error);
+    }
 }
 
 const logoutUser = (req, res, next) => {
-    req.logout(error => {
-        if (error) return next(error);
-        res.redirect('/');
-    });
-    res.clearCookie('connect.sid', { path: '/' });
-    req.session.destroy(error => {
-        if (error) return next(error);
-        res.redirect('/');
-    })
+    try {
+        req.logout(error => {
+            if (error) return next(error);
+            res.redirect('/');
+        });
+        res.clearCookie('connect.sid', { path: '/' });
+        req.session.destroy(error => {
+            if (error) return next(error);
+            res.redirect('/');
+        })
+    } catch (error) {
+        next(error);
+    }
 }
 
 module.exports = { registerUser, loginUser, logoutUser }; 
