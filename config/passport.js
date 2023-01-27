@@ -1,6 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const { BadRequest } = require('../utils/error');
 
 const initialize = (passport) => {
     const customFields = {
@@ -12,14 +13,14 @@ const initialize = (passport) => {
         const user = await User.findOne({ email: email });
 
         if (!user) {
-            return done(null, false, { message: 'No user with that email' });
+            return done(new BadRequest(`No user with email ${email} found`), false);
         }
 
         try {
             if (await bcrypt.compare(password, user.hash)) {
                 return done(null, user);
             } else {
-                return done(null, false, { message: 'Password incorrect' });
+                return done(new BadRequest('Password incorrect'), false);
             }
         } catch (error) {
             return done(error);

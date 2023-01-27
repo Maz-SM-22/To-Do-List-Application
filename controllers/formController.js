@@ -1,5 +1,5 @@
 const Task = require('../models/Task');
-const { GeneralError, BadRequest, NotFoundError } = require('../utils/error');
+const { NotFoundError } = require('../utils/error');
 
 const renderTaskForm = async (req, res, next) => {
     try {

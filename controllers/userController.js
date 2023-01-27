@@ -1,7 +1,7 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
-const { GeneralError, BadRequest, NotFoundError } = require('../utils/error');
+const { BadRequest } = require('../utils/error');
 
 const registerUser = async (req, res, next) => {
     try {

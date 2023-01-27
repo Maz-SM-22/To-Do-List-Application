@@ -1,11 +1,11 @@
 const Task = require('../models/Task');
-const { GeneralError, BadRequest, NotFoundError } = require('../utils/error');
+const User = require('../models/User');
+const { BadRequest, NotFoundError } = require('../utils/error');
 
-const getTasks = (req, res, next) => {
+const getTasks = async (req, res, next) => {
     try {
-        Task.find({}).then(tasks => {
-            res.render('tasks', { tasks: tasks, user: req.user });
-        });
+        const userObj = await User.findById(req.user._id).populate('tasks');
+        res.render('tasks', { tasks: userObj.tasks, user: req.user });
     } catch (error) {
         next(error);
     }
@@ -17,15 +17,22 @@ const createTask = async (req, res, next) => {
         if (!title) {
             throw new BadRequest('Please enter a title for your task');
         } else {
+            const user = req.user;
             const task = await Task.create({
-                title: req.body.title.trim(),
-                description: req.body.description.trim(),
+                title: title.trim(),
+                description: description.trim(),
                 completed: false,
-                dueDate: req.body.dueDate
+                dueDate: dueDate
             });
             task.save((error) => {
                 if (error) next(error);
-                else res.redirect('/tasks');
+                else {
+                    user.tasks.push(task._id);
+                    user.save((err) => {
+                        if (err) return next(err);
+                        res.redirect('/tasks');
+                    })
+                }
             })
         }
     } catch (error) {

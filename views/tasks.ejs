@@ -25,26 +25,33 @@
         <a href="/task/create" class="button">Add New Task</a>
         <h2>Pending Tasks</h2>
         <div class="tasks-container">
-            <% for (let task of tasks.filter(task=> task.completed === false)) { %>
-                <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
-                        <p class="task-title">
-                            <%=task.title %>
-                        </p>
-                        <p class="task-description">
-                            <%=task.description %>
-                        </p>
-                        <p class="task-due-date">
-                            <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
+            <% const pendingTasks=tasks.filter(task=> task.completed === false) %>
+                <% if (pendingTasks) { %>
+                    <% for (pendingTasks) { %>
+                        <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
+                                <p class="task-title">
+                                    <%=task.title %>
+                                </p>
+                                <p class="task-description">
+                                    <%=task.description %>
+                                </p>
+                                <p class="task-due-date">
+                                    <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
                         </p>
                         <button id="status" class="small">Complete</button>
                         <button id="edit" class="small">Edit</button>
                         <button id="delete" class="small">Delete</button>
                 </div>
                 <% } %>
+                <% } else { %> 
+                    <p>You have no pending tasks</p>
+                <% } %>
         </div>
         <h2>Completed Tasks</h2>
         <div class="tasks-container">
-            <% for (let task of tasks.filter(task=> task.completed === true)) { %>
+            <% const completedTasks = tasks.filter(task=> task.completed === true) %> 
+            <% if (completedTasks) { %> 
+            <% for (let task of completedTasks) { %>
                 <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
                         <p class="task-title">
                             <%=task.title %>
@@ -60,6 +67,9 @@
                         <button id="delete" class="small">Delete</button>
                 </div>
                 <% } %>
+                <% } else { %> 
+                    <p>You have no completed tasks</p>
+                <% } %> 
         </div>
     </div>
     <script>

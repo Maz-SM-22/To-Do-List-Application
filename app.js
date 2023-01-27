@@ -4,7 +4,8 @@ const passport = require('passport');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
-const ejs = require('ejs');
+const cors = require('cors');
+// const ejs = require('ejs');
 const staticDirectory = require('serve-static');
 require('dotenv').config({ path: './config/config.env' });
 const dbConnect = require('./config/db');
@@ -20,7 +21,8 @@ const app = express();
 app.use(express.json());
 app.use(staticDirectory(__dirname + '/public'));
 app.use(methodOverride('_method'));
-app.set('view engine', 'ejs');
+app.use(cors());
+// app.set('view engine', 'ejs');
 app.use(flash());
 
 app.use(session({
@@ -36,7 +38,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-const passportConfig = require('./config/passport')(passport);
 
 app.use('/tasks', taskRouter);
 app.use('/user', userRouter);
