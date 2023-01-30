@@ -52,12 +52,6 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.get('/view/error', (req, res) => {
-    res.writeHead(404, { "Content-type": "text/html" });
-    res.render('error');
-});
-
-
 app.listen({ path: HOSTNAME, port: PORT }, (error) => {
     if (error) return console.log(error);
     console.log(`Server is running on port ${PORT}...`);

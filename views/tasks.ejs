@@ -23,11 +23,11 @@
     <div class="container">
         <h2>To-Do List</h2>
         <a href="/task/create" class="button">Add New Task</a>
-        <h2>Pending Tasks</h2>
+        <h2 class="task-header">Pending Tasks</h2>
         <div class="tasks-container">
             <% const pendingTasks=tasks.filter(task=> task.completed === false) %>
                 <% if (pendingTasks) { %>
-                    <% for (pendingTasks) { %>
+                    <% for (let task of pendingTasks.sort((a, b)=> new Date(a.dueDate) - new Date(b.dueDate))) { %>
                         <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
                                 <p class="task-title">
                                     <%=task.title %>
@@ -35,57 +35,54 @@
                                 <p class="task-description">
                                     <%=task.description %>
                                 </p>
-                                <p class="task-due-date">
+                                <p class="task-due-date">Due:
                                     <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
                         </p>
-                        <button id="status" class="small">Complete</button>
-                        <button id="edit" class="small">Edit</button>
-                        <button id="delete" class="small">Delete</button>
-                </div>
-                <% } %>
-                <% } else { %> 
-                    <p>You have no pending tasks</p>
-                <% } %>
+                        <a href=' #' id="status" class="small button">Pending</a>
+                                        <% const editingAddress=`/task/edit/${task.id}` %>
+                                            <a href=<%=editingAddress %> id="edit" class="small button">Edit</a>
+                                            <% const deletingAddress=`/tasks/delete/${task.id}` %>
+                                                <a href=<%=deletingAddress %> class="small button">Delete</a>
+                        </div>
+                        <% } %>
+                            <% } else { %>
+                                <p>You have no pending tasks</p>
+                                <% } %>
         </div>
-        <h2>Completed Tasks</h2>
+        <h2 class="task-header">Completed Tasks</h2>
         <div class="tasks-container">
-            <% const completedTasks = tasks.filter(task=> task.completed === true) %> 
-            <% if (completedTasks) { %> 
-            <% for (let task of completedTasks) { %>
-                <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
-                        <p class="task-title">
-                            <%=task.title %>
+            <% const completedTasks=tasks.filter(task=> task.completed === true) %>
+                <% if (completedTasks) { %>
+                    <% for (let task of completedTasks.sort((a, b)=> new Date(a.dueDate) - new Date(b.dueDate))) { %>
+                        <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
+                                <p class="task-title">
+                                    <%=task.title %>
+                                </p>
+                                <p class="task-description">
+                                    <%=task.description %>
+                                </p>
+                                <p class="task-due-date">Due:
+                                    <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
                         </p>
-                        <p class="task-description">
-                            <%=task.description %>
-                        </p>
-                        <p class="task-due-date">
-                            <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
-                        </p>
-                        <button id="status" class="small">Pending</button>
-                        <button id="edit" class="small">Edit</button>
-                        <button id="delete" class="small">Delete</button>
-                </div>
-                <% } %>
-                <% } else { %> 
-                    <p>You have no completed tasks</p>
-                <% } %> 
+                        <a href=' #' id="status" class="small button">Pending</a>
+                                        <% const editingAddress=`/task/edit/${task.id}` %>
+                                            <a href=<%=editingAddress %> id="edit" class="small button">Edit</a>
+                                            <% const deletingAddress=`/tasks/delete/${task.id}` %>
+                                                <a href=<%=deletingAddress %> id="delete" class="small
+                                                    button">Delete</a>
+                        </div>
+                        <% } %>
+                            <% } else { %>
+                                <p>You have no completed tasks</p>
+                                <% } %>
         </div>
     </div>
     <script>
-        const deleteButtons = document.querySelectorAll(' #delete'); editButtons = document.querySelectorAll('#edit');
-        for (let button of editButtons) {
+        const
+            statusButtons = document.querySelectorAll('#status'); for (let button of
+            statusButtons) {
             button.addEventListener('click', (event) => {
                 let id = event.target.parentNode.attributes['data-id'].value.replace('"', '');
-                fetch(`/task/edit/${id}`)
-                    .then(() => console.log(`Editing task id no ${id}`));
-            })
-        }
-        const statusButtons = document.querySelectorAll('#status');
-        for (let button of statusButtons) {
-            button.addEventListener('click', (event) => {
-                let id = event.target.parentNode.attributes['data-id'].value.replace('"', '');
-                console.log(id);
                 fetch(`/tasks/done/${id}`)
                     .then(() => {
                         console.log(`Task id no ${id} status updated`)

@@ -18,8 +18,8 @@
         <% if (task) { %>
             <h4>Edit Task</h4>
             <% let id=task.id %>
-                <% let address=`/tasks/${id}?_method=PUT`; %>
-                    <form action=<%=address %>>
+                <% let address=`/tasks/update/${id}`; %>
+                    <form method="post" action=<%=address %>>
 
                         <div class="task-form-item">
                             <label for="title">Title:</label>

@@ -7,6 +7,7 @@ const handleErrors = (err, req, res, next) => {
     else if (err instanceof BadRequest) {
         return res.status(err.getStatusCode()).render('error', { error: err });
     }
+    console.log(err);
     return res.status(500).render('error', {
         error: new GeneralError('Unknown Error')
     })

@@ -33,8 +33,7 @@ const loginUser = async (req, res, next) => {
     try {
         passport.authenticate('local', {
             successRedirect: '/tasks',
-            failureRedirect: '/',
-            failureFlash: true
+            failureRedirect: '/'
         })(req, res, next);
     } catch (error) {
         next(error);

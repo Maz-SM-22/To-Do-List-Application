@@ -36,10 +36,18 @@ a.button {
     margin: 5% 3%;
 }
 
-button.small {
-    font-size: 0.8rem;
+#login,
+#register {
+    display: inline-block;
+    width: 20%;
+}
+
+a.small {
+    font-size: 1.2rem;
     padding: 10px;
     margin: 1px;
+    display: inline-block;
+    width: 25%;
 }
 
 input,
@@ -63,6 +71,11 @@ li {
     margin: 3% 2%;
 }
 
+h2.task-header {
+    margin-top: 8%;
+    font-size: 2.4rem;
+}
+
 .tasks-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -74,6 +87,15 @@ li {
     border-radius: 4px;
 }
 
+p.task-description {
+    font-size: 1rem;
+}
+
+p.task-due-date {
+    color: aqua;
+    font-size: 0.9em;
+}
+
 div[data-status="true"] {
     background-color: rgba(3, 37, 108, 0.5);
 }
@@ -82,8 +104,8 @@ div[data-status="false"] {
     background-color: rgb(37, 65, 178, 0.5);
 }
 
-.task-title {
-    font-size: 1.5rem;
+p.task-title {
+    font-size: 1.8rem;
 }
 
 .single-task-container {
