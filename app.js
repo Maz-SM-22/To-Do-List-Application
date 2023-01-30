@@ -38,6 +38,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+require('./config/passport')(passport);
 
 app.use('/tasks', taskRouter);
 app.use('/user', userRouter);
@@ -48,8 +49,7 @@ app.use(errorHandler);
 dbConnect();
 
 app.get('/', (req, res) => {
-    req.flash('info', 'Welcome!')
-    res.render('home', { message: req.flash('info') });
+    res.render('home');
 })
 
 app.get('/view/error', (req, res) => {
