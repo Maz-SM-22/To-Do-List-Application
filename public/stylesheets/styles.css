@@ -42,6 +42,13 @@ a.button {
     width: 20%;
 }
 
+a.medium {
+    font-size: 1.6rem;
+    display: inline-block;
+    min-width: 200px;
+    margin: 0.5%;
+}
+
 a.small {
     font-size: 1.2rem;
     padding: 10px;
@@ -108,11 +115,31 @@ p.task-title {
     font-size: 1.8rem;
 }
 
+a.task-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .single-task-container {
     background-color: var(--transparent-highlight);
-    max-width: 50%;
-    padding: 2%;
+    max-width: 65%;
+    padding: 5%;
     margin: 0 auto;
+}
+
+.single-task-container h2 {
+    margin: 0;
+}
+
+a.back-button {
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    padding: 2%;
+    position: fixed;
+    top: 10px;
+    left: 20px;
 }
 
 .task-form-container {

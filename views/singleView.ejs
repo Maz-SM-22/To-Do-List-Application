@@ -8,12 +8,16 @@
     <title>To-Do List</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" />
+    <link rel="stylesheet" href="fonts/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a6362087f9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css" />
 </head>
 
 <body>
     <h1>Task</h1>
+    <a href="/tasks" class="back-button"><i class="fa-solid fa-arrow-left-long"></i> Back</a>
     <div class="single-task-container">
         <h2>
             <%=task.title %>
@@ -21,12 +25,17 @@
         <p>
             <%=task.description %>
         </p>
-        <p>
-            <%=task.dueDate %>
+        <p class="task-due-date">
+            <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
         </p>
-        <a href="#" class="button">Edit</a>
-        <a href="#" class="button">Delete</a>
-        <a href="#" class="button">Mark Complete</a>
+        <% const editingAddress=`/task/edit/${task.id}` %>
+        <a href=<%=editingAddress %> class="button medium">Edit</a>
+        <% const deletingAddress=`/tasks/delete/${task.id}` %>
+        <a href=<%=deletingAddress %> class="button medium">Delete</a>
+        <% if (!task.completed) {%>
+        <% const completedAddress=`/tasks/done/${task.id}` %>
+        <a href=<%=completedAddress %> class="button medium">Mark As Done</a>
+        <% } %>
     </div>
 </body>
 

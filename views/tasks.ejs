@@ -28,69 +28,73 @@
             <% const pendingTasks=tasks.filter(task=> task.completed === false) %>
                 <% if (pendingTasks) { %>
                     <% for (let task of pendingTasks.sort((a, b)=> new Date(a.dueDate) - new Date(b.dueDate))) { %>
-                        <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
-                                <p class="task-title">
-                                    <%=task.title %>
-                                </p>
-                                <p class="task-description">
-                                    <%=task.description %>
-                                </p>
-                                <p class="task-due-date">Due:
-                                    <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
+                        <% let taskUrl=`/tasks/${task.id}` %>
+                            <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
+                                    <a href=<%=taskUrl %> class="task-link">
+                                        <p class="task-title">
+                                            <%=task.title %>
+                                        </p>
+                                        <p class="task-description">
+                                            <%=task.description %>
+                                        </p>
+                                        <p class="task-due-date">Due:
+                                            <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
                         </p>
-                        <a href=' #' id="status" class="small button">Pending</a>
-                                        <% const editingAddress=`/task/edit/${task.id}` %>
-                                            <a href=<%=editingAddress %> id="edit" class="small button">Edit</a>
-                                            <% const deletingAddress=`/tasks/delete/${task.id}` %>
-                                                <a href=<%=deletingAddress %> class="small button">Delete</a>
-                        </div>
-                        <% } %>
-                            <% } else { %>
-                                <p>You have no pending tasks</p>
-                                <% } %>
+                        <a href=' #' id="status" class="small button">Done
+                                    </a>
+                                    <% const editingAddress=`/task/edit/${task.id}` %>
+                                        <a href=<%=editingAddress %> id="edit" class="small button">Edit</a>
+                                        <% const deletingAddress=`/tasks/delete/${task.id}` %>
+                                            <a href=<%=deletingAddress %> class="small button">Delete</a>
+                            </div>
+                            <% } %>
+                                <% } else { %>
+                                    <p>You have no pending tasks</p>
+                                    <% } %>
         </div>
         <h2 class="task-header">Completed Tasks</h2>
         <div class="tasks-container">
             <% const completedTasks=tasks.filter(task=> task.completed === true) %>
                 <% if (completedTasks) { %>
                     <% for (let task of completedTasks.sort((a, b)=> new Date(a.dueDate) - new Date(b.dueDate))) { %>
-                        <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
-                                <p class="task-title">
-                                    <%=task.title %>
-                                </p>
-                                <p class="task-description">
-                                    <%=task.description %>
-                                </p>
-                                <p class="task-due-date">Due:
-                                    <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
+                        <% let taskUrl=`/tasks/${task.id}` %>
+                            <div class="task" data-status=<%=task.completed %> data-id=<%=task._id %>>
+                                    <a href=<%=taskUrl %> class="task-link">
+                                        <p class="task-title">
+                                            <%=task.title %>
+                                        </p>
+                                        <p class="task-description">
+                                            <%=task.description %>
+                                        </p>
+                                        <p class="task-due-date">Due:
+                                            <%=String(task.dueDate).split(' ').slice(0,4).join(' ') %>
                         </p>
-                        <a href=' #' id="status" class="small button">Pending</a>
-                                        <% const editingAddress=`/task/edit/${task.id}` %>
-                                            <a href=<%=editingAddress %> id="edit" class="small button">Edit</a>
-                                            <% const deletingAddress=`/tasks/delete/${task.id}` %>
-                                                <a href=<%=deletingAddress %> id="delete" class="small
-                                                    button">Delete</a>
-                        </div>
-                        <% } %>
-                            <% } else { %>
-                                <p>You have no completed tasks</p>
-                                <% } %>
+                        <a href=' #' id="status" class="small button">Pending
+                                    </a>
+                                    <% const editingAddress=`/task/edit/${task.id}` %>
+                                        <a href=<%=editingAddress %> id="edit" class="small button">Edit</a>
+                                        <% const deletingAddress=`/tasks/delete/${task.id}` %>
+                                            <a href=<%=deletingAddress %> id="delete" class="small
+                                                button">Delete</a>
+                            </div>
+                            <% } %>
+                                <% } else { %>
+                                    <p>You have no completed tasks</p>
+                                    <% } %>
         </div>
-    </div>
-    <script>
-        const
-            statusButtons = document.querySelectorAll('#status'); for (let button of
-            statusButtons) {
-            button.addEventListener('click', (event) => {
-                let id = event.target.parentNode.attributes['data-id'].value.replace('"', '');
-                fetch(`/tasks/done/${id}`)
-                    .then(() => {
-                        console.log(`Task id no ${id} status updated`)
-                        window.location.reload();
-                    });
-            })
-        }
-    </script>
+        <script>
+            const statusButtons = document.querySelectorAll('#status'); for (let button of
+                statusButtons) {
+                button.addEventListener('click', (event) => {
+                    let id = event.target.parentNode.attributes['data-id'].value.replace('"', '');
+                    fetch(`/tasks/done/${id}`)
+                        .then(() => {
+                            console.log(`Task id no ${id} status updated`)
+                            window.location.reload();
+                        });
+                })
+            }
+        </script>
 </body>
 
 </html>
